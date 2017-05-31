@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<STYLE>
+.aStyle { color: lime; }
+.a2ndStyle { color: red; font-size: 24pt; }
+</STYLE>
+<SCRIPT>
+var id = 0;
+function DiagonalTextBox (text, down, top, left, deg, lsp, style) {
+  deg = deg || 45;
+  deg = Math.PI / 180 * deg;
+  lsp = lsp || 10;
+  dy = lsp * Math.tan(deg);
+  if (document.layers) {
+    var l = new Layer (text.length * (10   lsp));
+    l.left = left; l.top = top;
+    l.clip.width = text.length * (10   lsp);
+    l.clip.height = text.length * (10   dy);
+    if (down) {
+      for (var r = 0; r < text.length; r  ) {
+        var cl = new Layer(100, l);
+        cl.left = r * lsp;
+        cl.top = Math.round(r * dy);
+        var html = ''
+        html  = style ? '<SPAN CLASS="'   style   '">' : '';
+        html  = text.charAt(r);
+        html  = style ? '<\/SPAN>' : '';
+        cl.document.open();
+        cl.document.write(html);
+        cl.document.close();
+        cl.visibility = 'show';
+      }
+    }
+    else {
+      for (var r = 0; r < text.length; r  ) {
+        var cl = new Layer(100, l);
+        cl.left = r * lsp;
+        cl.top = Math.round((text.length - r) * dy);
+        var html = ''
+        html  = style ? '<SPAN CLASS="'   style   '">' : '';
+        html  = text.charAt(r);
+        html  = style ? '<\/SPAN>' : '';
+        cl.document.open();
+        cl.document.write(html);
+        cl.document.close();
+        cl.visibility = 'show';
+      }
+    }
+    l.visibility = 'show';
+  }
+  else if (document.all || document.getElementById) {
+    var html = '';
+    html  = '<DIV ID="td'   id   '"';
+    html  = style ? ' CLASS="'   style   '"' : ''; 
+    html  = ' STYLE="position: absolute; left: ' 
+              left   'px; top : '   top   'px;"'
+    html  = '>';
+    if (down) {
+      for (var r = 0; r < text.length; r  ) {
+        html  = '<SPAN ID="td'   id   r 
+                    '" STYLE="position: relative; left: ' 
+                    (r * lsp)   'px; top: '   (r * dy)   'px;">'; 
+        html  = text.charAt(r);
+        html  = '</SPAN>';
+      }
+    }
+    else {
+      for (var r = 0; r < text.length; r  ) {
+        html  = '<SPAN ID="td'   id   r 
+                  '" STYLE="position: relative; left: ' 
+                  (r * lsp)   'px; top: ' 
+                  ((text.length - r) * dy)   'px;">'; 
+        html  = text.charAt(r);
+        html  = '</SPAN>';
+      }
+    }
+    html  = '<\/DIV>';
+    if (document.all)
+      document.body.insertAdjacentHTML('beforeEnd', html);
+    else if (document.createRange) {
+      var r = document.createRange();
+      r.setStartAfter(document.body.lastChild);
+      var docFrag = r.createContextualFragment(html);
+      document.body.appendChild(docFrag);
+    }
+  }
+  id  ;
+}
+</SCRIPT>
+<SCRIPT>
+function initTextBoxes () {
+  DiagonalTextBox ('All for Kibology', true, 100, 100, 15, 
+10, 'aStyle');
+  DiagonalTextBox ('All for Kibology', false, 300, 100, 45, 
+10, 'a2ndStyle');
+}
+</SCRIPT>
+</HEAD>
+<BODY ONLOAD="initTextBoxes();">
+<SPACER TYPE="block" WIDTH="800" HEIGHT="800">
+</BODY>
+</HTML>

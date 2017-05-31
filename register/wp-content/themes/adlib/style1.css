@@ -1,0 +1,89 @@
+/*
+Theme Name:     Ad Lib - Custom Child Theme
+Description:    Child theme for the boilerplate theme 
+Author:         Ad Lib
+Template:       boilerplate
+Version:        0.1.0
+*/
+
+@import url("../boilerplate/style.css");
+
+/*:::::::::::::::::::::::: [ GENERAL STYLES ] ::::::::::::::::::::::::*/
+body {margin:0; padding:0; ffont-family:Georgia, "Times New Roman", Times, serif;}
+p, ul {color:#595958;}
+ul {list-style: square;}
+img {max-width: 100%; height: auto;}
+a:hover {-o-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s;}
+
+.arrow-down {position:absolute; top:0; left: 25px; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 20px solid #5c3a45;}
+.col-left {float:left;}
+.col-right {float:right;}
+.clear {clear:both;}
+
+.grid_2 {width:166px;}
+.grid_3 {width:249px;}
+.grid_4 {width:332px;}
+.grid_5 {width:415px;}
+.grid_6 {width:498px;}
+.grid_7 {width:581px;}
+.grid_8 {width:664px;}
+.grid_9 {width:747px;}
+.grid_10 {width:830px;}
+.grid_12 {width:1000px; margin:0 auto;}
+.grid_extra {width: 1020px; margin: 0 auto;}
+
+/* CUSTOM STYLES */
+.site_width {width:940px; margin:0 auto;}
+
+/* HEADER */
+#header_container {background:#0f4a76; height:135px;}
+
+/* MAIN MENU NAVIGATION */
+#main_navigation_container .main-menu {float:left; width:600px;}
+#main_navigation_container {background:#D5E8FD; height:32px;}
+#main_navigation_container ul {list-style:none; height:32px;}
+#main_navigation_container ul li {display:inline;}
+#main_navigation_container ul li a {color:#143861; text-decoration:none; font-size:12px; font-family:Arial, Helvetica, sans-serif; line-height:32px; display:block; float:left; padding:0 10px;}
+#main_navigation_container ul li a:hover {background:#143861; color:#ffffff;}
+
+/* SECONDARY NAVIGATION */
+#main_navigation_container .menu-right-sidebar.right-sidebar {padding:0; width:230px;}
+#main_navigation_container .menu-right-sidebar.right-sidebar ul {padding:0;}
+#main_navigation_container .menu-right-sidebar.right-sidebar ul li a {float:right;}
+#main_navigation_container ul li.menu_item_prof a {background:#1761b5; color:#ffffff; text-transform:uppercase;}
+#main_navigation_container ul li.menu_item_prof a:hover {background:#0a407d;}
+#main_navigation_container ul li.menu_item_clients a {background:#b17e06; color:#ffffff; text-transform:uppercase; padding:0 29px;}
+#main_navigation_container ul li.menu_item_clients a:hover {background:#d09a1f;}
+
+
+/* MAIN CONTENT */
+#container {width: 690px; float:left; padding:15px 20px 0 0; font-size:16px; line-height:24px;}
+h1.entry-title {color:#143861 !important; font-family:Arial, Helvetica, sans-serif; font-size:20px; margin-top:5px; }
+.entry-content {padding:12px 0 0 0; margin-bottom:10px;}
+p.contract-text {font-family:Georgia, "Times New Roman", Times, serif; font-style:italic; color:#19548d; font-weight:bold; font-size:14px; margin-bottom:5px !important; border-top:1px dotted #d5a80d; padding-top:15px;}
+p.contract-text.contract-text-important {color:#DE6300; font-size:18px;}
+ol.contract-number-list {font-size:26px; color:#d5a80d;}
+ol.contract-number-list li {margin-bottom:10px; line-height:20px;}
+ol.contract-number-list li span {font-size:15px; color:#343434; line-height:16px;}
+ul.contract-submit {margin-left:35px; margin-top:10px;}
+
+.contract-form input {margin-bottom:10px;}
+.contract-form label {color:#D5A80D;}
+
+/* SIDEBAR */
+.right-sidebar {float: right; overflow: hidden; width: 210px; background:#d4e7fc; padding:10px;}
+.right-sidebar.widget-area ul {margin-left:18px; list-style:outside; list-style-type:square;}
+
+
+/* WIDGETS */
+.widget_sp_image h3{ display:none;}
+.right-sidebar {color:#666; font-size:12px; line-height:18px;}
+.right-sidebar .contract-signup.widget_sp_image {border:none; padding-bottom:0; margin-top:10px;}
+.right-sidebar .contract-widget-text {font-size:16px; color:#D5A80D; margin-bottom:5px;}
+.right-sidebar .contract-widget-affliate li {margin-bottom:5px;}
+.right-sidebar .contract-deadline {color:#de6300; font-weight:bold; font-size:13px; margin-bottom:5px;}
+
+
+/* FOOTER */
+#footer_container {clear:both; background:#D5E8FD; height:50px;}
+footer {padding:15px;}

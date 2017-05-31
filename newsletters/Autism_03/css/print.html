@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Print</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<script src="global.js"></script>
+<script src="scripts.js"></script>
+<script language="JavaScript">
+<!--
+function clickHere() {
+	if (event.button == 2) {
+		window.alert("Sorry, this function is disabled.");
+	}
+}
+document.onmousedown = clickHere;
+//-->
+</script>
+<script>
+///////////////////////////////////////////////////
+//
+//         Magellan Navigation Script 6.5
+//
+//          Copyright BCL Technologies
+//             All Rights Reserved
+//
+//     This Code My Not Be Duplicated Without
+//  The Express Written Consent of BCL Technologies
+//
+///////////////////////////////////////////////////
+// Globals
+
+// SEARCH TIMERS (can't refresh page inside a static loop)
+var gTimerID = null;
+var gTimerRunning = false;
+var gTimerDelay = 10;
+var gFoundSearchItem;
+var gTextFromPage;
+var gAbortPrint;
+
+var gResultsText;
+
+var gBeginRange;
+var gEndRange;
+
+var framesWindowReference;
+
+
+var win;
+
+	if (typeof window.opener.parent.main != 'undefined')
+		win = window.opener.parent.main;
+	else
+		win = window.opener;
+
+
+
+
+//-------------------------------------------------------------------------------
+// More Globals
+
+	URL_Data = getURLData();  // get URL string
+	setPrefFromURL(URL_Data);
+
+//-------------------------------------------------------------------------------
+
+
+function resizePages() {
+
+    var number;
+    var el;
+    var zoomVal = .75;
+    var currentFrame = 0;
+
+	for (var j=gBeginRange; j<=gEndRange; j++) {
+
+		if (!framesWindowReference.frames[currentFrame].document.styleSheets) return;
+		var mycss = new Array();
+		if (framesWindowReference.frames[currentFrame].document.styleSheets[0].cssRules)      // Mozilla
+		   mycss = framesWindowReference.frames[currentFrame].document.styleSheets[0].cssRules;
+		else
+		   mycss = framesWindowReference.frames[currentFrame].document.styleSheets[0].rules;  // IE
+
+		for(x=0;x<mycss.length;x++){
+		    if (x==0){
+				mycss[x].style.width = '0px';
+				mycss[x].style.height = '0px';
+			} else {
+				if (mycss[x].style.left != '') mycss[x].style.left = (parseFloat(mycss[x].style.left) * zoomVal) + 'px';
+				if (mycss[x].style.width != '') mycss[x].style.width = (parseFloat(mycss[x].style.width) * zoomVal) + 'px';
+				if (mycss[x].style.top != '') mycss[x].style.top = (parseFloat(mycss[x].style.top) * zoomVal) + 'px';
+				if (mycss[x].style.fontSize != '')  mycss[x].style.fontSize = (parseFloat(mycss[x].style.fontSize) * zoomVal+0.5) + 'px';
+			}
+
+		}
+
+		  var imgarr = framesWindowReference.frames[currentFrame].document.getElementsByTagName("IMG");
+		  for (var i = 0; i < imgarr.length; i++) {
+			if (imgarr[i].name == "") {
+			imgarr[i].height = imgarr[i].height * zoomVal;
+			imgarr[i].width = imgarr[i].width * zoomVal;
+			}
+		  }
+	currentFrame++;
+	} // for all frames
+
+}
+
+
+
+//-------------------------------------------------------------------------------
+
+
+function EnterKey() {
+   if (window.event.keyCode == 13)
+	   printme();
+   return !(window.event && window.event.keyCode == 13);
+}
+
+
+//-------------------------------------------------------------------------------
+
+
+function StartThePrintTimer()						// TIMER LOOP
+{
+
+   if (gAbortPrint){
+
+       if(gTimerRunning) clearTimeout(gTimerID);
+       gTimerRunning = false;
+       printform.cancelbutton.value = "Close";
+
+   } else {
+
+			if  (!framesWindowReference.readyState || framesWindowReference.readyState == "complete") {
+
+			if (printform.zoomcheck.checked) resizePages();
+
+			alert('Please make sure "print all frames individually" is selected under the options tab in the print dialog.');
+
+				if (framesWindowReference.print) {
+				   framesWindowReference.print();	// WE KNOW THAT ALL THE FRAMES HAVE BEEN SUCCESSFULLY LOADED
+				   self.close();
+				   framesWindowReference.close();
+				} else alert('Please try again...');
+				gAbortPrint = true;
+			}
+			// wait a second for the page to load and try again
+			gTimerRunning = true;
+			printform.cancelbutton.value = "Cancel";
+			gTimerID = self.setTimeout("StartThePrintTimer()", gTimerDelay);
+
+	} // abort search
+
+}
+
+
+
+
+
+
+function printme() {
+
+	if (printform.radiobutton[0].checked) {
+		gBeginRange = gCurrentPage;
+		gEndRange = gCurrentPage;
+	}
+	if (printform.radiobutton[1].checked) {
+		gBeginRange = gStartingPage;
+		gEndRange = gTotalPages;
+	}
+	if (printform.radiobutton[2].checked) {
+		gBeginRange = printform.beginpage.value;
+		gEndRange = printform.endpage.value;
+	}
+
+	if ( (gEndRange-gBeginRange) > 4) alert('Pages '+gBeginRange+' - '+gEndRange+' will be loaded into the print buffer.\nThis process may take a few moments to complete...');
+
+
+	if (printform.cancelbutton.value == "Cancel") {
+		gAbortPrint = true;
+	} else {
+
+		framesWindowReference = window.open('#','PrintBuffer','width=300,height=90,toolbar=no, status=no,menubar=no,location=no,directories=no,resizable');
+		framesWindowReference.document.open();
+		framesWindowReference.document.write(' <html><head><title>Print Buffer...</title></head><frameset name = "allPrintFrames" rows="*');
+			for (var i=gBeginRange; i<=(gEndRange-1); i++) {
+				framesWindowReference.document.write(',*');
+			}
+			framesWindowReference.document.write('" frameborder="no" framespacing=0> ');
+			for (var j=gBeginRange; j<=gEndRange; j++) {
+				framesWindowReference.document.write('<frame name="printframe' + j +'"  src = "'+gsFName+'_'+j+gsExtName+'?gShowToolbar=0" scrolling="no" marginheight=0 marginwidth=0>');
+			}
+			framesWindowReference.document.write(' </frameset></html>');
+		framesWindowReference.document.close();
+		printform.cancelbutton.value = "Cancel";
+
+		gTimerID = setTimeout("StartThePrintTimer()", gTimerDelay);
+
+		//StartThePrintTimer();						// START THE CLOCK
+	}
+
+}
+
+
+function cancelSearch() {
+	if (printform.cancelbutton.value == "Close") {
+		gAbortPrint = true;
+		if(gTimerRunning) clearTimeout(gTimerID);
+		gTimerRunning = false;
+		if (framesWindowReference!=null)	framesWindowReference.close();
+		window.close();
+	}
+	if (printform.cancelbutton.value == "Cancel") printme();
+}
+
+
+
+function SetPrintProperties() {
+	 var x;
+     x = new ActiveXObject("WScript.Shell")
+     x.SendKeys("+(%fu)");
+}
+
+
+</script>
+
+<body  leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+
+<script>
+	document.bgColor = gColor;
+</script>
+
+
+<div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">  </font></strong>
+  <form name="printform" method="post" action="">
+  <strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+  Print</font></strong><br>
+  <br>
+  <table border="1" cellpadding="5" cellspacing="0" bordercolor="#CCCCCC">
+    <tr>
+      <td><table border="0" cellspacing="0" cellpadding="5">
+        <tr>
+          <td valign="top" nowrap><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+            <input name="radiobutton" type="radio" value="currentradio" checked>
+      Current Page<br>
+            </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+            <input type="radio" name="radiobutton" value="allradio">
+      All Pages</font><br>
+      <div align="left"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+        <input type="radio" name="radiobutton" value="rangeradio">
+        Page Range:
+	        <script>
+	        	document.write('<input onChange="printform.radiobutton[2].checked=true" name="beginpage" type="text" style="color: #0000FF;font-family: Verdana, Arial, Helvetica, sans-serif;top: 0px;font-size: 9px;background-color: #FFFFFF;height: 16px; border: 1px solid #0000FF;" onKeyPress=JavaScript:return EnterKey()" value="'+gStartingPage+'" size="4" maxlength="4">');
+	        </script>
+	        to
+	        <script>
+			document.write('<input onChange="printform.radiobutton[2].checked=true" name="endpage" type="text" style="color: #0000FF;font-family: Verdana, Arial, Helvetica, sans-serif;top: 0px;font-size: 9px;background-color: #FFFFFF;height: 16px; border: 1px solid #0000FF;" onKeyPress="JavaScript:return EnterKey()" value="'+gTotalPages+'" size="4" maxlength="4">');
+		</script>
+
+      </font></div>
+          </td>
+          <td valign="top" nowrap> <font color="#0000FF" size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>                note</strong></font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">:
+              It may take a few moments to print <br>
+              multiple pages
+              because each
+              page  must
+              <br>
+              pre-load and resize. </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> Note
+      that you can remove
+<br>
+header and footer text in <a href="#" onclick="window.opener.SetPrintProperties();" >Page Setup</a>.</font></td>
+        </tr>
+        <tr>
+          <td nowrap><div align="left"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+              <input name="zoomcheck" type="checkbox" value="checkbox" checked>
+              <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> resize
+              contents to fit page</font>&nbsp; </font></div>
+          </td>
+          <td nowrap><div align="right">
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="50" height="24" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" bgcolor="#CCCCCC">
+                  <tr>
+                    <td valign="middle"><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a onClick="printme()" href="JavaScript:void('Print')">
+                    <script>
+                    document.write('<img src="'+gImagePath+'print.gif" align="absbottom" alt="Print" border="0">');
+                    </script>
+
+                    </a></font></div></td>
+                  </tr>
+                </table></td>
+                <td>&nbsp;&nbsp;<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                  <input onClick="cancelSearch()" type="button" name="cancelbutton" value="Close">
+</font></td>
+              </tr>
+            </table>
+            <font size="1" face="Verdana, Arial, Helvetica, sans-serif">            </font></div>
+          </td>
+        </tr>
+      </table></td>
+    </tr>
+  </table>
+  </form>
+</div>
+</body>
+</html>

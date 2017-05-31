@@ -1,0 +1,91 @@
+/*
+Theme Name:     Ad Lib - Custom Child Theme
+Description:    Child theme for the boilerplate theme 
+Author:         Ad Lib
+Template:       boilerplate
+Version:        0.1.0
+*/
+
+@import url("../boilerplate/style.css");
+
+/*:::::::::::::::::::::::: [ GENERAL STYLES ] ::::::::::::::::::::::::*/
+body {margin:0; padding:0; color: #132646; font-family: Arial,Helvetica,sans-serif; font-size: 13px; line-height: 20px;}
+p, ul {color:#132646;margin: 1em 0;}
+ul {list-style: square;}
+img {max-width: 100%; height: auto;}
+a:hover {-o-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s;}
+
+.col-left {float:left;}
+.col-right {float:right;}
+.clear {clear:both;}
+
+.grid_2 {width:166px;}
+.grid_3 {width:249px;}
+.grid_4 {width:332px;}
+.grid_5 {width:415px;}
+.grid_6 {width:498px;}
+.grid_7 {width:581px;}
+.grid_8 {width:664px;}
+.grid_9 {width:747px;}
+.grid_10 {width:830px;}
+.grid_12 {width:1000px; margin:0 auto;}
+.grid_extra {width: 1020px; margin: 0 auto;}
+
+
+/*:::::::::::::::::::::::: [ HEADER STYLES ] ::::::::::::::::::::::::*/
+#header-container {background: #153862;}
+#header-container #header {height:144px;}
+#header-container #header a {display: block;}
+
+#header-container #header-menu-container {background: #d5e8fd; height:32px;}
+#header-container #header-menu ul {list-style:none; height:32px; margin: 0;}
+#header-container #header-menu ul li {display:inline;}
+#header-container #header-menu ul li a {text-decoration:none; font-size:12px; font-family:Arial, Helvetica, sans-serif; line-height:32px; display:block; padding:0 10px;}
+
+#header-container #header-menu .menu-header-primary ul {padding-left: 15px;}
+#header-container #header-menu .menu-header-primary ul li a {color:#143861; float: left;}
+#header-container #header-menu .menu-header-primary ul li a:hover {background:#143861; color:#ffffff;}
+
+#header-container #header-menu .menu-header-secondary ul li a {color:#ffffff; text-transform:uppercase; display: block; float: left;}
+#header-container #header-menu .menu-header-secondary ul li.menu_item_prof a {background:#1761b5;}
+#header-container #header-menu .menu-header-secondary ul li.menu_item_prof a:hover {background:#0a407d;}
+#header-container #header-menu .menu-header-secondary ul li.menu_item_clients a {background:#b17e06; padding:0 38px;}
+#header-container #header-menu .menu-header-secondary ul li.menu_item_clients a:hover {background:#d09a1f;}
+
+
+/*:::::::::::::::::::::::: [ CONTENT STYLES ] ::::::::::::::::::::::::*/
+#content {margin-bottom: 15px;}
+#main-content #main-content-inside article {padding: 25px;}
+#main-content #main-content-inside h2.entry-title {color:#143861 !important; font-family:Arial, Helvetica, sans-serif; font-size:20px; margin-top:5px; }
+#main-content #main-content-inside .entry-content {padding:12px 0 0 0; margin-bottom:10px;}
+#main-content #main-content-inside p.contract-text {font-family:Georgia, "Times New Roman", Times, serif; font-style:italic; color:#19548d; font-weight:bold; font-size:14px; margin-bottom:5px !important; border-top:1px dotted #d5a80d; padding-top:15px;}
+#main-content #main-content-inside p.contract-text.contract-text-important {color:#DE6300; font-size:18px;}
+#main-content #main-content-inside ol.contract-number-list {font-size:26px; color:#d5a80d;}
+#main-content #main-content-inside ol.contract-number-list li {margin-bottom:10px; line-height:20px;}
+#main-content #main-content-inside ol.contract-number-list li span {font-size:15px; color:#343434; line-height:16px;}
+#main-content #main-content-insideul.contract-submit {margin-left:35px; margin-top:10px;}
+
+#main-content #main-content-inside .contract-form input {margin-bottom:10px;}
+#main-content #main-content-inside .contract-form label {color:#D5A80D;}
+
+/*:::::::::::::::::::::::: [ INSIDE RIGHT STYLES ] ::::::::::::::::::::::::*/
+#main-content #sidebar-inside-right {background:#d4e7fc; padding:10px; color:#666; font-size:12px; line-height:18px;}
+#main-content #sidebar-inside-right ul {margin-left:18px; list-style:outside; list-style-type:square;}
+#main-content #sidebar-inside-right ul li {font-family:Georgia, "Times New Roman", Times, serif;}
+#main-content #sidebar-inside-right p {font-family:Georgia, "Times New Roman", Times, serif; font-style:italic;}
+
+#main-content #sidebar-inside-right .contract-signup.widget_sp_image {border:none; padding-bottom:0; margin-top:10px;}
+#main-content #sidebar-inside-right .contract-widget-text {font-size:16px; color:#D5A80D; margin-bottom:5px; font-style: normal;}
+#main-content #sidebar-inside-right .contract-widget-affliate li {margin-bottom:5px;}
+#main-content #sidebar-inside-right .contract-deadline {color:#de6300; font-weight:bold; font-size:13px; margin-bottom:5px;}
+
+/*:::::::::::::::::::::::: [ CONTACT FORM ] ::::::::::::::::::::::::*/
+fscf_form2 div{
+margin-top:20px;
+margin-bottom:20px;
+}
+
+.wpcf7-form-control-wrap.discipline .wpcf7-form-control.wpcf7-select{overflow-y:scroll;}
+
+/*:::::::::::::::::::::::: [ FOOTER STYLES ] ::::::::::::::::::::::::*/
+footer {background:#D5E8FD; padding: 25px 15px; text-align: center;}

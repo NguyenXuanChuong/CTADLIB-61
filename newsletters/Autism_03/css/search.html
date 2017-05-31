@@ -1,0 +1,450 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Search</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<script src="global.js"></script>
+<script src="scripts.js"></script>
+<script language="JavaScript">
+<!--
+function clickHere() {
+	if (event.button == 2) {
+		window.alert("Sorry, this function is disabled.");
+	}
+}
+document.onmousedown = clickHere;
+//-->
+</script>
+
+<script type="text/javascript" language="javascript">
+<!-- Hide script from older browsers
+
+if (document.images) {
+offButton = new Image
+onButton = new Image
+
+offButton.src = gImagePath+'search_1.gif'
+onButton.src = gImagePath+'search_2.gif'
+}
+else {
+offButton = ""
+onButton = ""
+
+document.searchGraphic = ""
+}
+
+// End hiding script from older browsers -->
+</script>
+
+
+</head>
+
+<script>
+
+// Globals
+///////////////////////////////////////////////////
+//
+//         Magellan Navigation Script 6.5
+//
+//          Copyright BCL Technologies
+//             All Rights Reserved
+//
+//     This Code May Not Be Duplicated Without
+//  The Express Written Consent of BCL Technologies
+//
+///////////////////////////////////////////////////
+// SEARCH TIMERS (can't refresh page inside a static loop)
+var gTimerID = null;
+var gTimerRunning = false;
+var gTimerDelay = 10;
+
+// SEARCH
+var gFoundSearchItem;
+var gTextFromPage;
+var gAbortSearch;
+
+var gResultsText;
+
+var tempVar;
+
+var win;
+
+	if (typeof window.opener.parent.main != 'undefined')
+		win = window.opener.parent.main;
+	else
+		win = window.opener;
+
+
+
+
+
+//-------------------------------------------------------------------------------
+
+function getURLData() { // parse the URL and insert values into array
+
+  URL_Data = new Object();
+  separator = ',';
+
+  query = '' + window.location;
+  qu = query
+  query = query.substring((query.indexOf('?')) + 1);
+
+  if (query.length < 1) { return false; }
+
+  keys = new Object();
+  name_value = 1;
+
+  while (query.indexOf('&') > -1) {
+    keys[name_value] = query.substring(0,query.indexOf('&'));
+    query = query.substring((query.indexOf('&')) + 1);
+    name_value++;
+  }
+
+  keys[name_value] = query;
+
+  for (i in keys) {
+    keyName = keys[i].substring(0,keys[i].indexOf('='));
+    keyValue = keys[i].substring((keys[i].indexOf('=')) + 1);
+    while (keyValue.indexOf('+') > -1) {
+      keyValue = keyValue.substring(0,keyValue.indexOf('+')) + ' ' + keyValue.substring(keyValue.indexOf('+') + 1);
+    }
+
+    keyValue = unescape(keyValue);
+
+    if (URL_Data[keyName]) {
+      URL_Data[keyName] = URL_Data[keyName] + separator + keyValue;
+    } else {
+      URL_Data[keyName] = keyValue;
+    }
+  }
+
+  return URL_Data;
+}
+
+//-------------------------------------------------------------------------------
+// More Globals
+
+URL_Data = getURLData();  // get URL string
+
+var gCurrentPage = URL_Data['currentpage'];
+var gStartingSearchPage = URL_Data['currentpage'];
+
+var n = 0;
+
+
+//-------------------------------------------------------------------------------
+
+
+
+
+function getCurrentPage()
+{
+	var page_num;
+
+	if (typeof window.opener.parent.main != 'undefined') {
+
+		page_num = window.opener.parent.main.location + "";
+		page_num = page_num.substring(page_num.lastIndexOf("_")+1,page_num.lastIndexOf("."));
+
+	} else {
+
+		page_num = window.opener.location + "";
+		page_num = page_num.substring(page_num.lastIndexOf("_")+1,page_num.lastIndexOf("."));
+	}
+
+	return parseInt(page_num);
+}
+
+
+function getNextPage()
+{
+	if (getCurrentPage()==gTotalPages) {
+		return gStartingPage;
+	} else {
+		return getCurrentPage() + 1;
+	}
+}
+
+function getPreviousPage()
+{
+	if (getCurrentPage()==gStartingPage) {
+		return gTotalPages;
+	} else {
+		return getCurrentPage() - 1;
+	}
+}
+
+function updatePage(pageNum)
+{
+
+	if (typeof window.opener.parent.main != 'undefined') {
+
+		if (pageNum > 0) {
+			window.opener.parent.main.location = gsFName + "_" + getNextPage() + gsExtName;
+			gCurrentPage = getNextPage();
+			gStartingSearchPage = getNextPage();
+		}
+
+		if (pageNum < 0) {
+			window.opener.parent.main.location = gsFName + "_" + getPreviousPage() + gsExtName;
+			gCurrentPage = getPreviousPage();
+			gStartingSearchPage = getPreviousPage();
+		}
+
+	} else {
+
+		if (pageNum > 0) {
+			window.opener.location = gsFName + "_" + getNextPage() + gsExtName;
+			gCurrentPage = getNextPage();
+			gStartingSearchPage = getNextPage();
+		}
+
+		if (pageNum < 0) {
+			window.opener.location = gsFName + "_" + getPreviousPage() + gsExtName;
+			gCurrentPage = getPreviousPage();
+			gStartingSearchPage = getPreviousPage();
+		}
+	}
+}
+
+
+
+
+//-------------------------------------------------------------------------------
+
+
+function EnterKey() {						// ALLOWS YOU TO PRESS ENTER IN THE FIND TEXT BOX
+   if (window.event.keyCode == 13)
+	   findit();
+   return !(window.event && window.event.keyCode == 13);
+}
+
+
+//-------------------------------------------------------------------------------
+
+
+function findInPage(str) {
+	var txt, i, found;
+	if (str == "")	return false;
+	if (gBrowser==NN) {
+		if (!win.find(str)) {
+			gFoundSearchItem = true;
+			while(win.find(str, false, true))
+			n++;
+		} else n++;
+		if (n == 0) {
+			gFoundSearchItem = false;
+			//alert(str + " was not found on this page.");
+		}
+	}
+
+	if (gBrowser==IE) {
+		txt = win.document.body.createTextRange();
+		for (i = 0; i <= n && (found = txt.findText(str)) != false; i++) {
+			txt.moveStart("character", 1);
+			txt.moveEnd("textedit");
+		}
+		if (found) {
+			gFoundSearchItem = true;
+			txt.moveStart("character", -1);
+			txt.findText(str);
+			txt.select();
+			txt.scrollIntoView();
+			n++;
+		}
+		else {
+			if (n > 0) {
+			n = 0;
+			findInPage(str);
+		}
+		else {
+			gFoundSearchItem = false;
+			//alert(str + " was not found on this page.");
+			}
+		}
+	}
+return false;
+}
+
+//-------------------------------------------------------------------------------
+
+function StartTheFindTimer()						// TIMER LOOP
+{
+
+   if (gAbortSearch){
+
+       if(gTimerRunning) clearTimeout(gTimerID);
+       gTimerRunning = false;
+	   if (searchform.cancelbutton.value != "Close") {
+		   searchform.cancelbutton.value = "Close";
+		   document.searchGraphic.src=offButton.src;
+	   }
+
+   } else {
+
+
+
+		if (typeof window.opener.parent.main != 'undefined')
+			tempVar = !window.opener.parent.main.document.readyState || window.opener.parent.main.document.readyState == "complete";
+		else
+			tempVar = !window.opener.document.readyState || window.opener.document.readyState == "complete";
+
+			if (tempVar)  {
+
+				gFoundSearchItem = false;
+				findInPage(searchform.mytext.value);
+
+				if (!gFoundSearchItem) {
+
+					gCurrentPage++;
+					if (gCurrentPage>gTotalPages) gCurrentPage = gStartingPage;
+
+					if (gCurrentPage==gStartingSearchPage) {
+						gAbortSearch = true;
+						alert(searchform.mytext.value + ' not found!');
+					}
+
+					else {
+
+						if (typeof window.opener.parent.main != 'undefined')
+							window.opener.parent.main.location = gsFName + "_" + gCurrentPage + gsExtName;
+						else
+							window.opener.location = gsFName + "_" + gCurrentPage + gsExtName;
+					}
+
+				} else {
+					// found term!
+					gAbortSearch = true;
+				}
+			}
+			// wait a second for the page to load and try again
+			gTimerRunning = true
+			if (searchform.cancelbutton.value != "Cancel") {
+				searchform.cancelbutton.value = "Cancel";
+				document.searchGraphic.src=onButton.src;
+			}
+			gTimerID = self.setTimeout("StartTheFindTimer()", gTimerDelay)
+
+	} // abort search
+
+}
+
+
+
+
+
+
+function findit() {									// BEGIN SEARCHING FOR TERM (OR CANCEL)
+    if (gTimerRunning) {
+    	gFoundSearchItem = false;
+        gAbortSearch = true;
+    }
+    else if (searchform.mytext.value == '') return;
+    else {
+		gAbortSearch = false;
+		gFoundSearchItem = false;
+		if (gCurrentPage == '')	gCurrentPage = URL_Data['currentpage'];
+
+		if(gTimerRunning) clearTimeout(gTimerID)
+		gTimerRunning = false
+
+		if (searchform.cancelbutton.value != "Close") {
+			searchform.cancelbutton.value = "Close";
+			document.searchGraphic.src=offButton.src;
+		}
+
+    	StartTheFindTimer()						// START THE CLOCK
+    }
+}
+
+
+function cancelSearch() {
+if (searchform.cancelbutton.value == "Close") window.close();
+if (searchform.cancelbutton.value == "Cancel") findit();
+}
+
+
+</script>
+
+<body OnLoad="document.searchform.mytext.focus();" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<script>
+	document.bgColor = gColor;
+</script>
+
+<div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">  </font></strong>
+  <form name="searchform" method="post" action="">
+  <br>
+  <table border="1" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
+    <tr>
+      <td><table border="0" cellspacing="0" cellpadding="5">
+        <tr>
+          <td valign="top" nowrap>		        <div align="center">
+            <table border="1" cellpadding="1" cellspacing="0" bordercolor="#CCCCCC" bgcolor="#FFFFFF">
+      <tr>
+        <td nowrap><div align="center">
+          &nbsp;
+          <script>
+		  document.write('<img src="'+gImagePath+'search_1.gif" name="searchGraphic" border="0">');
+		              </script>
+        </div></td>
+      </tr>
+            </table>
+            <font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a onClick="updatePage(-1)" href="#">
+            <br>
+            <script>
+		document.write('<img src="'+gImagePath+'prev.gif" align="absbottom" border="0">');
+		              </script>
+                  </a><font size="1" face="Verdana, Arial, Helvetica, sans-serif"></font><a onClick="updatePage(1)" href="#">
+                  <script>
+		document.write('<img src="'+gImagePath+'next.gif" align="absbottom" border="0">');
+		              </script>
+                  </a></font></div>
+            </td>
+          <td><table border="0" cellspacing="0" cellpadding="1">
+            <tr>
+              <td colspan="2" nowrap><div align="center">
+                  <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>Find</strong>:</font>
+                          <input type="text" onKeyPress="JavaScript:return EnterKey()" name="mytext" style="color: #0000FF;font-family: Verdana, Arial, Helvetica, sans-serif;top: 0px;font-size: 9px;background-color: #FFFFFF;height: 16px; border: 1px solid #0000FF;">
+&nbsp;&nbsp;</td>
+                      <td><table width="50" height="24" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" bgcolor="#CCCCCC">
+                          <tr>
+                            <td valign="middle"><div align="center"><a onClick="findit()" href="#">
+                                <script>
+						document.write('<img src="'+gImagePath+'find.gif" align="absbottom" alt="Find" border="0">');
+						</script>
+                              </a></div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                  <div align="right"></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2"><hr noshade>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" nowrap>&nbsp;</td>
+              <td><div align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                  <input onClick="cancelSearch()" type="button" name="cancelbutton" value="Close">
+                </font></div>
+              </td>
+            </tr>
+          </table></td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+  </table>
+  </form>
+</div>
+</body>
+</html>

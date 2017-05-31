@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+
+
+<!--#set var="Agent" value="${HTTP_USER_AGENT}" -->
+<!--#if expr="$Agent = /en/" --> 
+<!--#elif expr="$Agent = /Opera/" --> 
+<!--#elif expr="$Agent = /Netscape/" --> 
+<!--#else -->
+ 
+<meta name="Description" content="Type your description here">
+<meta name="Keywords" content="add, your keywords, here">
+<!--#endif -->
+
+<TITLE>Overweight_7</TITLE></HEAD>
+<BODY> body<br>
+below agenyt type
+<!--#echo var="HTTP_USER_AGENT"-->
+<!--#echo var="DATE_LOCAL" -->
+<!--#if "&&HTTP_USER_AGENT&&" hasstring "Mosaic" goto mosaiclabel --> <P>You are not using Mosaic <!--#goto ="defaultlabel" --> <!--#label ="mosaiclabel" --> <P>You are using Mosaic <!--#label ="defaultlabel" --> 
+
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,84 @@
+body.popup {
+		margin:0;
+		padding:0;
+}
+
+.plainText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 20px;
+	padding-right: 20px;
+	padding-left: 20px;
+	color: #132646;
+}
+.plainText_padding {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 20px;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-top:20px;
+	color: #132646;
+}
+.smallText {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 13px;
+	color: #003366;
+}
+.pageTitles {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	font-weight: bolder;
+}
+.pageTitlesPros {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	color: #1C60B3;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	font-weight: bolder;
+}
+.pageTitlesClient {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	color: #B27E06;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	font-weight: bolder;
+}
+.JobListingTitles {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #003366;
+	line-height: 40px;
+	padding-left: 20px;
+}
+.sideText {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+#slider img {
+	border:none;
+}
+
+.ur_posting {
+	border: 1px solid #143861;
+	background-color:#d5e8fd;
+	padding: 5px;
+}
+
+/********** ABOUT_PRESENTER.PHP PAGE STYLES **********/
+.presenter_list a {color:#024E75; line-height:25px; font-family:Arial, Helvetica, sans-serif;}
+.presenter {border-top:1px dashed #3e3e3e; padding-top:10px; margin-top:10px;}
+.presenter a {font-size:18px; color:#024E75; font-style:italic;}

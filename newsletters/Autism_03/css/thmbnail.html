@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Page Index</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript">
+<!--
+function clickHere() {
+	if (event.button == 2) {
+		window.alert("Sorry, this function is disabled.");
+	}
+}
+document.onmousedown = clickHere;
+//-->
+</script>
+</head>
+
+<script src="global.js"></script><script src="scripts.js"></script>
+<script>
+
+///////////////////////////////////////////////////
+//
+//         Magellan Navigation Script 6.5
+//
+//          Copyright BCL Technologies
+//             All Rights Reserved
+//
+//     This Code May Not Be Duplicated Without
+//  The Express Written Consent of BCL Technologies
+//
+///////////////////////////////////////////////////
+
+//-------------------------------------------------------------------------------
+// globals
+var gInitialPosX = 0;
+var gInitialPosY = 0;
+
+//-------------------------------------------------------------------------------
+
+function getURLData() { // parse the URL and insert values into array
+
+  URL_Data = new Object();
+  separator = ',';
+
+  query = '' + this.location;
+  qu = query
+  query = query.substring((query.indexOf('?')) + 1);
+
+  if (query.length < 1) { return false; }
+
+  keys = new Object();
+  name_value = 1;
+
+  while (query.indexOf('&') > -1) {
+    keys[name_value] = query.substring(0,query.indexOf('&'));
+    query = query.substring((query.indexOf('&')) + 1);
+    name_value++;
+  }
+
+  keys[name_value] = query;
+
+  for (i in keys) {
+    keyName = keys[i].substring(0,keys[i].indexOf('='));
+    keyValue = keys[i].substring((keys[i].indexOf('=')) + 1);
+    while (keyValue.indexOf('+') > -1) {
+      keyValue = keyValue.substring(0,keyValue.indexOf('+')) + ' ' + keyValue.substring(keyValue.indexOf('+') + 1);
+    }
+
+    keyValue = unescape(keyValue);
+
+    if (URL_Data[keyName]) {
+      URL_Data[keyName] = URL_Data[keyName] + separator + keyValue;
+    } else {
+      URL_Data[keyName] = keyValue;
+    }
+  }
+
+  return URL_Data;
+}
+
+function updatePage(pageNum) {
+
+if (typeof window.opener.parent.main != 'undefined')
+	window.opener.parent.main.location = gsFName + "_" + pageNum + gsExtName+"?gInitialPosX="+gInitialPosX+"&gInitialPosY="+gInitialPosY;
+else
+	window.opener.location = gsFName + "_" + pageNum + gsExtName+"?gInitialPosX="+gInitialPosX+"&gInitialPosY="+gInitialPosY;
+
+}
+
+
+URL_Data = getURLData();  // get URL string
+
+gInitialPosX = URL_Data['gInitialPosX'];
+gInitialPosY = URL_Data['gInitialPosY'];
+
+
+</script>
+
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<script>
+	document.bgColor = gColor;
+</script>
+
+<div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>Page Index<br><br>
+  </font></strong>
+    <script>
+
+document.writeln('<table align="center"  border="0" cellspacing="5" cellpadding="0">');
+	for (var i = gStartingPage; i<=gTotalPages; i++) {
+		document.writeln('  <tr>');
+		document.writeln('    <td><div align="left">');
+		if (gThumbnails) document.writeln('    <a href="javascript:updatePage('+i+');"><span style="text-decoration: none; border-top: 1px none #000000;border-right: 1px solid #000000;	border-bottom: 1px solid #000000;	border-left: 1px none #000000;"><img onClick="updatePage('+i+');" src="'+gThumbnailPath + gsFullName + '_tn_' + i + '_p0.jpg'+'" alt="'+gsPgName+' '+i+'" border="0"></span>');
+		else             document.writeln('    <img src="'+gImagePath+'blankpage.gif" border="0" align="absmiddle"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> <a href="javascript:updatePage('+i+');"><span style="text-decoration: none; color:blue">'+gsPgName+' '+i+'</span></a></font>');
+		document.writeln('    </div></td>');
+		document.writeln('  </tr>');
+	}
+document.writeln('</table>');
+
+
+  </script>
+
+</div>
+</body>
+</html>

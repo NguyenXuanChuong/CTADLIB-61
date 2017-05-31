@@ -1,0 +1,7 @@
+name: Wordpress
+version: 2.0.4
+installed: Mon Apr 11 13:13:21 PDT 2011
+db: 22815
+dbname: comp_net_wp_news
+licenseaccept: yes
+addon: Wordpress

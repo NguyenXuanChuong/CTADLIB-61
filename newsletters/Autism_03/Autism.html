@@ -1,0 +1,51 @@
+<html>
+<head>
+
+   <script src="./Autism/css/global.js"></script> 
+   <SCRIPT LANGUAGE="JavaScript"> 
+   <!-- 
+   	document.writeln('<title>'+gsTitle+'</title>'); 
+   var gsCSSPath = "./Autism/css/";
+   var gsNN4Path = "./Autism/css/";
+   var gsFramePath;
+
+   //------------------------------------------------------------------------------- 
+   // browser detection  
+   //------------------------------------------------------------------------------- 
+   var gBrowser = 0;				// note: DO NOT change these settings  
+   var IE = 1; 
+   var NN = 2; 
+   var MO = 3; 
+   var OP = 4; 
+
+   if (document.all) gBrowser=IE;    
+   if (document.layers) gBrowser=NN;    
+   if (!document.all && document.getElementById) gBrowser=MO; 
+   if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) gBrowser=OP;    
+
+	  if (gBrowser == NN)   // old NN4 
+       gsFramePath = gsNN4Path; 
+   else // for other browser 
+       gsFramePath = gsCSSPath; 
+
+	  document.location = gsFramePath+gsFName+gsExtName; 
+
+   //--> 
+   </SCRIPT>
+	<script language="JavaScript">
+	<!--
+	function clickHere() {
+		if (event.button == 2) {
+			alert("Sorry, this function is disabled.");
+		}
+	}
+	document.onmousedown = clickHere;
+	//-->
+	</script>
+</head>
+
+
+<body>
+   This page contains frames and requires javascript.
+</body>
+</html>

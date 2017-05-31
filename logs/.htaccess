@@ -1,0 +1,7 @@
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /www/htdocs/domains/s6/00909/www.comprehensivenet.com/etc/.htpasswd
+<Limit GET POST>
+require valid-user
+Options ExecCGI FollowSymLinks
+</Limit>

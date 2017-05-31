@@ -1,0 +1,29 @@
+AddType text/html .shtml
+AddHandler server-parsed .html .shtml
+AddHandler php5-script .php
+Options Indexes FollowSymLinks Includes
+
+
+AuthName "Restricted Area" 
+AuthType Basic 
+AuthUserFile /www/htdocs/domains/s6/00909/www.comprehensivenet.com/webdocs/.htpasswd 
+AuthGroupFile /dev/null 
+<Files coclogon.php>
+require valid-user
+order deny,allow
+deny from all
+allow from 216.254.79.224
+</Files>
+<Files binetlogon.php>
+require valid-user
+order deny,allow
+deny from all
+allow from 216.254.79.224
+</Files>
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+
