@@ -5,7 +5,11 @@
 <link href="ComprehensiveStyles.css" rel="stylesheet" type="text/css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<style type="text/css">
+  .ing_logo{
+    width: 400px;
+  }
+</style>
 <script type="text/JavaScript">
 <!--
 function MM_swapImgRestore() { //v3.0
@@ -38,7 +42,8 @@ function MM_swapImage() { //v3.0
   <tr>
     <td>&nbsp;</td>
     <td width="850">
-    <img src="images/header.jpg" alt="Comprehensive Network" title="Comprehensive Network">
+    <img src="images/header_update.png" alt="Comprehensive Network" title="Comprehensive Network">
+
     <!--<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="850" height="144">
       <param name="movie" value="flash/Header.swf" />
       <param name="quality" value="high" />
@@ -51,7 +56,11 @@ function MM_swapImage() { //v3.0
   <tr>
     <td><table width="850" height="32" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="right"><a href="http://www.facebook.com/pages/Comprehensive-NetworkR-Inc/123062317724504?ref=ts" target="_blank"><img src="images/25_facebook.jpg" alt="Facebook" width="25" height="24" vspace="4" border="0"></a><a href="http://twitter.com/Comprehensive25" target="_blank"><img src="images/25_twitter.jpg" alt="Twitter" width="25" height="24" vspace="4" border="0"></a><!--<a href="blog/" target="_blank"><img src="images/25_blog.jpg" alt="BlogSpot" width="25" height="24" vspace="4" border="0"></a><a href="p_ContinuingEd.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Current CE Courses','','images/buttons/courses_on.jpg',1)"><img src="images/buttons/courses.jpg" alt="Current CE Courses" name="Current CE Courses" width="165" height="32" hspace="4" border="0" id="Current CE Courses" /></a> --><a href="index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Home','','images/buttons/home_on.jpg',1)"><img src="images/buttons/home.jpg" alt="Home" name="Home" width="70" height="32" border="0" id="Home" style="margin-left:198px;" /></a><a href="about.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('About Us','','images/buttons/about_on.jpg',1)"><img src="images/buttons/about.jpg" alt="About Us" name="About Us" width="70" height="32" border="0" id="About Us" /></a><a href="contact.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Contact Us','','images/buttons/contact_on.jpg',1)"><img src="images/buttons/contact.jpg" alt="Contact Us" name="Contact Us" width="70" height="32" border="0" id="Contact Us" /></a><a href="newsletters.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Newsletters','','images/buttons/newsletters_on.jpg',1)"><img src="images/buttons/newsletters.jpg" alt="Newsletters" name="Newsletters" width="102" height="32" border="0"></a><a href="professionals.php"><img src="images/buttons/professional.jpg" alt="Professionals" width="144" height="32" border="0" /></a><a href="clients.php"><img src="images/buttons/clients.jpg" alt="Clients" width="144" height="32" border="0" /></a></td>
+        <td align=""><a href="https://www.facebook.com/Comprehensive-Resources-Inc-1724741051081703/" target="_blank"><img src="images/25_facebook.jpg" alt="Facebook" width="25" height="24" vspace="4" border="0"></a><a href="index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Home','','images/buttons/home_on.jpg',1)"><img src="images/buttons/home.jpg" alt="Home" name="Home" width="70" height="32" border="0" id="Home" style="margin-left:225px;" /></a><a href="about.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('About Us','','images/buttons/about_on.jpg',1)"><img src="images/buttons/about.jpg" alt="About Us" name="About Us" width="70" height="32" border="0" id="About Us" /></a><a href="contact.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Contact Us','','images/buttons/contact_on.jpg',1)"><img src="images/buttons/contact.jpg" alt="Contact Us" name="Contact Us" width="70" height="32" border="0" id="Contact Us" /></a><a href="newsletters.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Newsletters','','images/buttons/newsletters_on.jpg',1)"><img src="images/buttons/newsletters.jpg" alt="Newsletters" name="Newsletters" width="102" height="32" border="0"></a>
+<!--          <a href="job.php" style=""><span>Job</span></span></a>-->
+<!--          <a href="friend.php" style="margin-left: 20px"><span>Friend</span></span></a>-->
+<!--          <a href="event.php" style="margin-left: 20px"><span>Event</span></span></a>-->
+        </td>
       </tr>
     </table>
 	</td>
